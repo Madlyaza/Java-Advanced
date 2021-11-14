@@ -16,6 +16,11 @@ public class Infix
         String[] args = x.split("");
         for (String val:args)
         {
+            if(val.trim().equals(""))
+            {
+                continue;
+            }
+
             switch (val)
             {
                 case "+":
