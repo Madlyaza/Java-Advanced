@@ -13,8 +13,7 @@ public class InputReader
         try
         {
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            String input = reader.readLine();
-            return input;
+            return reader.readLine();
         }
         catch(Exception e)
         {
