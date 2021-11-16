@@ -15,7 +15,6 @@ public class HelloWorld {
     @GetMapping
     public String message()
     {
-        System.out.println("hello world");
-        return "message";
+        return "this message is a thing";
     }
 }
