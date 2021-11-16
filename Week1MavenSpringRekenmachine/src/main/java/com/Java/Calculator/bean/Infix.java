@@ -1,28 +1,25 @@
 package com.Java.Calculator.bean;
 
 import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
 
 import java.util.Stack;
 
+@Component
 @Profile("infixTest")
-public class Infix
-{
-    public Integer calculate (String x)
-    {
-        Stack<String> operators = new Stack<String>();
-        Stack<Integer> operands = new Stack<Integer>();
+public class Infix {
+    public Integer calculate(String x) {
+        Stack<String> operators = new Stack<>();
+        Stack<Integer> operands = new Stack<>();
 
         boolean lastNum = false;
         String[] args = x.split("");
-        for (String val:args)
-        {
-            if(val.trim().equals(""))
-            {
+        for (String val : args) {
+            if (val.trim().equals("")) {
                 continue;
             }
 
-            switch (val)
-            {
+            switch (val) {
                 case "+":
                 case "-":
                 case "*":
@@ -31,8 +28,7 @@ public class Infix
                     lastNum = false;
                     break;
                 default:
-                    if(lastNum)
-                    {
+                    if (lastNum) {
                         String num = operands.pop().toString();
                         String temp = num + val;
                         operands.push(Integer.parseInt(temp));
@@ -49,8 +45,7 @@ public class Infix
         int left = operands.pop();
         String operator = operators.pop();
         int value = 0;
-        switch (operator)
-        {
+        switch (operator) {
             case "+":
                 value = left + right;
                 break;

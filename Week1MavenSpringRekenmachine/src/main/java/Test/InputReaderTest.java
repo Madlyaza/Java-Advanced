@@ -9,13 +9,11 @@ import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class InputReaderTest
-{
+class InputReaderTest {
 
     @Test
     @DisplayName("InputReader testing input")
-    void readInput()
-    {
+    void readInput() {
         String data = "Users Input";
         System.setIn(new ByteArrayInputStream(data.getBytes()));
 

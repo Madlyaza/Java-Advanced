@@ -10,20 +10,17 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class InfixTest
-{
+class InfixTest {
     Infix infix;
+
     @BeforeEach
-    public void init()
-    {
-        ApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
-        this.infix = context.getBean(Infix.class);
+    public void init() {
+        this.infix = new Infix();
     }
 
     @Test
     @DisplayName("Infix Normal + - * / calculations")
-    void calculate()
-    {
+    void calculate() {
         assertEquals(10, infix.calculate("5 + 5"));
         assertEquals(25, infix.calculate("5 * 5"));
         assertEquals(0, infix.calculate("5 - 5"));
@@ -32,9 +29,8 @@ class InfixTest
 
     @Test
     @DisplayName("Infix Error Throwing")
-    void calculateError()
-    {
-        assertThrows(NumberFormatException.class, () ->{
+    void calculateError() {
+        assertThrows(NumberFormatException.class, () -> {
             infix.calculate("yesytased");
         });
     }

@@ -1,26 +1,25 @@
 package com.Java.Calculator.bean;
 
+import org.springframework.context.annotation.Profile;
+
 import java.util.Stack;
 
-public class Postfix
-{
-    public Integer calculate (String x)
-    {
+@Profile("postfixTest")
+public class Postfix {
+    public Integer calculate(String x) {
         String[] strArray = x.split(" ");
-        Stack<Integer> operands = new Stack<Integer>();
+        Stack<Integer> operands = new Stack<>();
 
-        for (String val : strArray)
-        {
-            switch(val)
-            {
+        for (String val : strArray) {
+            switch (val) {
                 case "+":
                 case "-":
                 case "*":
                 case "/":
                     int right = operands.pop();
-                    int left= operands.pop();
+                    int left = operands.pop();
                     int value = 0;
-                    switch(val){
+                    switch (val) {
                         case "+":
                             value = left + right;
                             break;
