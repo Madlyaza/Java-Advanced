@@ -1,5 +1,6 @@
 package com.controller;
 
+import com.model.Pokemon;
 import com.model.Trainer;
 import com.service.TrainerService;
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 
 @RestController
@@ -28,9 +30,24 @@ public class TrainerController
     }
 
     @GetMapping("/{name}")
-    public ResponseEntity<ArrayList<Trainer>> getByName(@PathVariable String name)
+    public ResponseEntity<ArrayList<Trainer>> getByNameOrId(@PathVariable @Valid String name)
     {
+        try
+        {
+            int id = Integer.parseInt(name);
+            return trainerService.getTrainerById(id);
+        }
+        catch(Exception ignored)
+        {
+
+        }
         return trainerService.getTrainerByName(name);
+    }
+
+    @GetMapping("/caught/{id}")
+    public ResponseEntity<ArrayList<Pokemon>> getTrainersPokemon(@PathVariable @Valid int id)
+    {
+        return trainerService.getTrainersPokemon(id);
     }
 
     @PostMapping(value = "",
@@ -53,4 +70,5 @@ public class TrainerController
     {
         return trainerService.update(id, trainer);
     }
+
 }

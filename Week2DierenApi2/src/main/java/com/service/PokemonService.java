@@ -9,11 +9,11 @@ import java.util.ArrayList;
 @Service
 public class PokemonService
 {
-    ArrayList<Pokemon> pokemonList;
+    private final ArrayList<Pokemon> pokemonList;
 
-    public PokemonService()
+    public PokemonService(ArrayList<Pokemon> pokemonList)
     {
-        this.pokemonList = new ArrayList<>();
+        this.pokemonList = pokemonList;
         fillList();
     }
 
@@ -55,7 +55,9 @@ public class PokemonService
         {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
+
         ArrayList<Pokemon> matchedPokemonList = new ArrayList<>();
+
         for (Pokemon pokemon: pokemonList)
         {
             if (pokemon.getName().contains(name))
