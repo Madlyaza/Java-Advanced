@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.Optional;
 
 @RestController
 
@@ -24,28 +25,31 @@ public class TrainerController
     }
 
     @GetMapping("")
-    public ResponseEntity<ArrayList<Trainer>> getAll()
+    public ResponseEntity<ArrayList<Trainer>> getAll(@RequestParam(required = false) String name, @RequestParam(required = false) String id)
     {
-        return new ResponseEntity<>(trainerService.getTrainers(), HttpStatus.OK);
+        System.out.println();
+        if(name != null)
+        {
+            return trainerService.getTrainerByName(name);
+        }
+        else if (id != null)
+        {
+            return trainerService.getTrainerById(Integer.parseInt(id));
+        }
+        else
+        {
+            return new ResponseEntity<>(trainerService.getTrainers(), HttpStatus.OK);
+        }
     }
 
-    @GetMapping("/{name}")
-    public ResponseEntity<ArrayList<Trainer>> getByNameOrId(@PathVariable @Valid String name)
-    {
-        try
-        {
-            int id = Integer.parseInt(name);
-            return trainerService.getTrainerById(id);
-        }
-        catch(Exception ignored)
-        {
+//    @GetMapping("/{name}")
+//    public ResponseEntity<ArrayList<Trainer>> getByName(@PathVariable String name)
+//    {
+//        return trainerService.getTrainerByName(name);
+//    }
 
-        }
-        return trainerService.getTrainerByName(name);
-    }
-
-    @GetMapping("/caught/{id}")
-    public ResponseEntity<ArrayList<Pokemon>> getTrainersPokemon(@PathVariable @Valid int id)
+    @GetMapping("/caught")
+    public ResponseEntity<ArrayList<Pokemon>> getTrainersPokemon(@RequestParam int id)
     {
         return trainerService.getTrainersPokemon(id);
     }
@@ -57,16 +61,16 @@ public class TrainerController
         return trainerService.create(newTrainer);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Trainer> delete(@PathVariable int id)
+    @DeleteMapping("")
+    public ResponseEntity<Trainer> delete(@RequestParam int id)
     {
         return trainerService.delete(id);
     }
 
-    @PutMapping(value = "/{id}",
+    @PutMapping(value = "",
     consumes = MediaType.APPLICATION_JSON_VALUE,
     produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Trainer> update(@PathVariable int id, @RequestBody @Valid Trainer trainer)
+    public ResponseEntity<Trainer> update(@RequestParam int id, @RequestBody @Valid Trainer trainer)
     {
         return trainerService.update(id, trainer);
     }
