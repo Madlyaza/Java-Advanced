@@ -1,4 +1,4 @@
-package com.resources;
+package com.Model;
 
 public class Trainer
 {
