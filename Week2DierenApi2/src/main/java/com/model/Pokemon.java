@@ -1,9 +1,7 @@
-package com.Model;
+package com.model;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
+
 
 public class Pokemon
 {
@@ -11,10 +9,11 @@ public class Pokemon
     @NotBlank
     String name;
 
-    @PositiveOrZero
+    @Positive
     int trainerId;
 
     @NotNull
+    @Positive
     int idTag;
 
     public Pokemon()
