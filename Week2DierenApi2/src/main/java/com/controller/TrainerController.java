@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -24,17 +26,12 @@ public class TrainerController
         this.trainerService = trainerService;
     }
 
-    @GetMapping("")
-    public ResponseEntity<ArrayList<Trainer>> getAll(@RequestParam(required = false) String name, @RequestParam(required = false) String id)
+    @GetMapping
+    public ResponseEntity<ArrayList<Trainer>> getAll(@RequestParam(required = false) String name)
     {
-        System.out.println();
         if(name != null)
         {
             return trainerService.getTrainerByName(name);
-        }
-        else if (id != null)
-        {
-            return trainerService.getTrainerById(Integer.parseInt(id));
         }
         else
         {
@@ -42,27 +39,26 @@ public class TrainerController
         }
     }
 
-//    @GetMapping("/{name}")
-//    public ResponseEntity<ArrayList<Trainer>> getByName(@PathVariable String name)
-//    {
-//        return trainerService.getTrainerByName(name);
-//    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Trainer> getTrainerById(@PathVariable int id)
+    {
+        return trainerService.getTrainerById(id);
+    }
 
-    @GetMapping("/caught")
-    public ResponseEntity<ArrayList<Pokemon>> getTrainersPokemon(@RequestParam int id)
+    @GetMapping("/{id}/pokemon")
+    public ResponseEntity<ArrayList<Pokemon>> getTrainersPokemon(@PathVariable int id)
     {
         return trainerService.getTrainersPokemon(id);
     }
 
-    @PostMapping(value = "",
-    consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Trainer> create(@RequestBody @Valid Trainer newTrainer)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Trainer> create(@RequestBody Trainer newTrainer)
     {
         return trainerService.create(newTrainer);
     }
 
-    @DeleteMapping("")
-    public ResponseEntity<Trainer> delete(@RequestParam int id)
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Trainer> delete(@PathVariable int id)
     {
         return trainerService.delete(id);
     }
@@ -70,9 +66,8 @@ public class TrainerController
     @PutMapping(value = "",
     consumes = MediaType.APPLICATION_JSON_VALUE,
     produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Trainer> update(@RequestParam int id, @RequestBody @Valid Trainer trainer)
+    public ResponseEntity<Trainer> update(@RequestParam int id, @RequestBody Trainer trainer)
     {
         return trainerService.update(id, trainer);
     }
-
 }

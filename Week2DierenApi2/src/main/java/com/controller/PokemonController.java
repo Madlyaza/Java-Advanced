@@ -36,7 +36,7 @@ public class PokemonController
 
     @PostMapping(value = "",
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Pokemon> create(@RequestBody @Valid Pokemon newPokemon)
+    public ResponseEntity<Pokemon> create(@RequestBody Pokemon newPokemon)
     {
         return pokemonService.create(newPokemon);
     }
@@ -50,7 +50,7 @@ public class PokemonController
     @PutMapping(value = "/{id}",
     consumes = MediaType.APPLICATION_JSON_VALUE,
     produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Pokemon> update(@PathVariable int id, @RequestBody @Valid Pokemon pokemonToUpdate)
+    public ResponseEntity<Pokemon> update(@PathVariable int id, @RequestBody Pokemon pokemonToUpdate)
     {
         return pokemonService.update(id, pokemonToUpdate);
     }

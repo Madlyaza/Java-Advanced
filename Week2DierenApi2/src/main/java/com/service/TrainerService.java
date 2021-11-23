@@ -76,21 +76,18 @@ public class TrainerService
         }
     }
 
-    public ResponseEntity<ArrayList<Trainer>> getTrainerById(int id)
+    public ResponseEntity<Trainer> getTrainerById(int id)
     {
         if(id == 0)
         {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
-        ArrayList<Trainer> matchedTrainerList = new ArrayList<>();
-
         for(Trainer trainer : trainerList)
         {
             if (trainer.getTrainerId() == id)
             {
-                matchedTrainerList.add(trainer);
-                return new ResponseEntity<>(matchedTrainerList, HttpStatus.OK);
+                return new ResponseEntity<>(trainer, HttpStatus.OK);
             }
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
