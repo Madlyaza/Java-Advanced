@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.xml.ws.Response;
 import java.util.ArrayList;
 
 
@@ -20,29 +19,8 @@ public class TrainerService
     {
         this.trainerList = trainerList;
         this.pokemonService = pokemonService;
-        fillList();
     }
 
-    public void fillList()
-    {
-        Trainer trainer = new Trainer();
-        trainer.setName("chelsea");
-        trainer.setTrainerId(1);
-        ArrayList<Integer> caughtPokemonIds = new ArrayList<>();
-        caughtPokemonIds.add(1);
-        caughtPokemonIds.add(2);
-        trainer.setCaughtPokemon(caughtPokemonIds);
-        trainerList.add(trainer);
-
-        trainer = new Trainer();
-        trainer.setName("peter");
-        trainer.setTrainerId(2);
-        caughtPokemonIds = new ArrayList<>();
-        caughtPokemonIds.add(3);
-        caughtPokemonIds.add(4);
-        trainer.setCaughtPokemon(caughtPokemonIds);
-        trainerList.add(trainer);
-    }
 
     public ArrayList<Trainer> getTrainers()
     {
@@ -85,7 +63,7 @@ public class TrainerService
 
         for(Trainer trainer : trainerList)
         {
-            if (trainer.getTrainerId() == id)
+            if (trainer.getId() == id)
             {
                 return new ResponseEntity<>(trainer, HttpStatus.OK);
             }
@@ -97,7 +75,7 @@ public class TrainerService
     {
         Trainer newTrainer = new Trainer();
         newTrainer.setName(trainer.getName().toLowerCase());
-        newTrainer.setTrainerId(trainerList.get(trainerList.size()-1).getTrainerId()+1);
+        newTrainer.setId(trainerList.get(trainerList.size()-1).getId()+1);
         newTrainer.setCaughtPokemon(trainer.getCaughtPokemon());
 
         if (trainerList.add(newTrainer))
@@ -114,7 +92,7 @@ public class TrainerService
     {
         for(int i = 0; i < trainerList.size(); i++)
         {
-            if(trainerList.get(i).getTrainerId() == id)
+            if(trainerList.get(i).getId() == id)
             {
                 return new ResponseEntity<>(trainerList.remove(i), HttpStatus.OK);
             }
@@ -126,7 +104,7 @@ public class TrainerService
     {
         for (Trainer trainer : trainerList)
         {
-            if (trainer.getTrainerId() == id)
+            if (trainer.getId() == id)
             {
                 trainer.setName(trainerToUpdate.getName().toLowerCase());
                 return new ResponseEntity<>(trainer, HttpStatus.OK);
@@ -138,20 +116,20 @@ public class TrainerService
     public ResponseEntity<ArrayList<Pokemon>> getTrainersPokemon(int id)
     {
         ArrayList<Pokemon> trainersPokemonList = new ArrayList<>();
-        for(Trainer trainer : trainerList)
-        {
-            if(trainer.getTrainerId() == id)
-            {
-                ArrayList<Pokemon> pokemonList = pokemonService.getPokemon();
-                for (Pokemon pokemon : pokemonList)
-                {
-                    if(pokemon.getTrainerId() == trainer.getTrainerId())
-                    {
-                        trainersPokemonList.add(pokemon);
-                    }
-                }
-            }
-        }
+//        for(Trainer trainer : trainerList)
+//        {
+//            if(trainer.getId() == id)
+//            {
+//                ArrayList<Pokemon> pokemonList = pokemonService.getPokemon();
+//                for (Pokemon pokemon : pokemonList)
+//                {
+//                    if(pokemon.getTrainerId() == trainer.getId())
+//                    {
+//                        trainersPokemonList.add(pokemon);
+//                    }
+//                }
+//            }
+//        }
         if(trainersPokemonList.size() != 0)
         {
             return new ResponseEntity<>(trainersPokemonList, HttpStatus.OK);

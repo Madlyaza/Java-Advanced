@@ -1,20 +1,27 @@
 package com.model;
 
+import org.springframework.stereotype.Component;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 
+@Entity
 public class Trainer
 {
     @Size(max = 50)
     @NotBlank
-    String name;
+    private String name;
 
     @Positive
-    int trainerId;
-
-    ArrayList<Integer> caughtPokemon;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    private Integer id;
 
     public Trainer()
     {
@@ -31,23 +38,14 @@ public class Trainer
         this.name = name;
     }
 
-    public int getTrainerId()
+    public Integer getId()
     {
-        return trainerId;
+        return id;
     }
 
-    public void setTrainerId(int trainerId)
+    public void setId(Integer id)
     {
-        this.trainerId = trainerId;
+        this.id = id;
     }
 
-    public ArrayList<Integer> getCaughtPokemon()
-    {
-        return caughtPokemon;
-    }
-
-    public void setCaughtPokemon(ArrayList<Integer> caughtPokemon)
-    {
-        this.caughtPokemon = caughtPokemon;
-    }
 }

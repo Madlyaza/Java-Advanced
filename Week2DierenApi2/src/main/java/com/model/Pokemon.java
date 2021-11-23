@@ -1,20 +1,26 @@
 package com.model;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+
+import javax.persistence.*;
 import javax.validation.constraints.*;
 
-
+@Entity
 public class Pokemon
 {
     @Size(max = 50)
     @NotBlank
-    String name;
+    private String name;
 
-    @Positive
-    int trainerId;
+    @ManyToOne
+    @JoinColumn(name = "trainerId")
+    private Trainer trainer;
 
-    @NotNull
-    @Positive
-    int idTag;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     public Pokemon()
     {
@@ -30,23 +36,25 @@ public class Pokemon
         this.name = name;
     }
 
-    public int getIdTag()
+    public Integer getId()
     {
-        return idTag;
+        return id;
     }
 
-    public void setIdTag(int idTag)
+    public void setId(Integer id)
     {
-        this.idTag = idTag;
+        this.id = id;
     }
 
-    public int getTrainerId()
+    public Trainer getTrainer()
     {
-        return trainerId;
+        return trainer;
     }
 
-    public void setTrainerId(int trainerId)
+    public void setTrainer(Trainer trainer)
     {
-        this.trainerId = trainerId;
+        this.trainer = trainer;
     }
+
+
 }

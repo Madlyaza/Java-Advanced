@@ -14,34 +14,6 @@ public class PokemonService
     public PokemonService(ArrayList<Pokemon> pokemonList)
     {
         this.pokemonList = pokemonList;
-        fillList();
-    }
-
-    public void fillList()
-    {
-        Pokemon pokemon = new Pokemon();
-        pokemon.setName("Charmander");
-        pokemon.setIdTag(1);
-        pokemon.setTrainerId(1);
-        pokemonList.add(pokemon);
-
-        pokemon = new Pokemon();
-        pokemon.setName("Charmander");
-        pokemon.setIdTag(2);
-        pokemon.setTrainerId(1);
-        pokemonList.add(pokemon);
-
-        pokemon = new Pokemon();
-        pokemon.setName("Pikachu");
-        pokemon.setIdTag(3);
-        pokemon.setTrainerId(2);
-        pokemonList.add(pokemon);
-
-        pokemon = new Pokemon();
-        pokemon.setName("Bulbasaur");
-        pokemon.setIdTag(4);
-        pokemon.setTrainerId(2);
-        pokemonList.add(pokemon);
     }
 
     public ArrayList<Pokemon> getPokemon()
@@ -79,8 +51,7 @@ public class PokemonService
     {
         Pokemon newPokemon = new Pokemon();
         newPokemon.setName(pokemon.getName());
-        newPokemon.setTrainerId(pokemon.getTrainerId());
-        newPokemon.setIdTag(pokemonList.get(pokemonList.size()-1).getIdTag()+1);
+        newPokemon.setId(pokemonList.get(pokemonList.size()-1).getId()+1);
 
         if(pokemonList.add(newPokemon))
         {
@@ -96,7 +67,7 @@ public class PokemonService
     {
         for (int i = 0; i < pokemonList.size(); i++)
         {
-            if (pokemonList.get(i).getIdTag() == id)
+            if (pokemonList.get(i).getId() == id)
             {
                 return new ResponseEntity<>(pokemonList.remove(i), HttpStatus.OK);
             }
@@ -108,10 +79,9 @@ public class PokemonService
     {
         for (Pokemon pokemon : pokemonList)
         {
-            if (pokemon.getIdTag() == id)
+            if (pokemon.getId() == id)
             {
                 pokemon.setName(pokemonToUpdate.getName());
-                pokemon.setTrainerId(pokemonToUpdate.getTrainerId());
                 return new ResponseEntity<>(pokemon, HttpStatus.OK);
             }
         }

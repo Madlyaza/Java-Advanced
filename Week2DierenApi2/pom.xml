@@ -60,9 +60,40 @@
 
     <dependency>
       <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>5.3.7.Final</version>
+    </dependency>
+
+
+
+    <dependency>
+      <groupId>org.hibernate</groupId>
       <artifactId>hibernate-validator</artifactId>
       <version>6.0.17.Final</version>
     </dependency>
+
+    <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>8.0.27</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.springframework/spring-orm -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-orm</artifactId>
+      <version>5.3.13</version>
+    </dependency>
+
+    <!--To prevent duplicate code-->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.4</version>
+      <scope>provided</scope>
+    </dependency>
+
   </dependencies>
 
   <build>
@@ -86,10 +117,6 @@
           <artifactId>maven-surefire-plugin</artifactId>
           <version>2.22.1</version>
         </plugin>
-<!--        <plugin>-->
-<!--          <artifactId>maven-war-plugin</artifactId>-->
-<!--          <version>3.2.2</version>-->
-<!--        </plugin>-->
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
           <version>2.5.2</version>
