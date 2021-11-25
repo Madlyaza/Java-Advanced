@@ -22,7 +22,7 @@ public class DatabaseConfig
     {
         DriverManagerDataSource ds = new DriverManagerDataSource();
         ds.setDriverClassName("com.mysql.jdbc.Driver");
-        ds.setUrl("jdbc:mysql://localhost:3306/pokemondatabase");
+        ds.setUrl("jdbc:mysql://127.0.0.1:3306/jdbc");
         ds.setUsername("root");
         ds.setPassword("");
         return ds;
@@ -53,7 +53,8 @@ public class DatabaseConfig
         return transactionManager;
     }
 
-    private Properties additionalProperties() {
+    private Properties additionalProperties()
+    {
         Properties properties = new Properties();
         properties.setProperty("hibernate.hbm2ddl.auto", "create");
         properties.setProperty("dialect", "org.hibernate.dialect.MySQLDialect");

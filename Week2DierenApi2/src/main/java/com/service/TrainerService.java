@@ -76,7 +76,6 @@ public class TrainerService
         Trainer newTrainer = new Trainer();
         newTrainer.setName(trainer.getName().toLowerCase());
         newTrainer.setId(trainerList.get(trainerList.size()-1).getId()+1);
-        newTrainer.setCaughtPokemon(trainer.getCaughtPokemon());
 
         if (trainerList.add(newTrainer))
         {

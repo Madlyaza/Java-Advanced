@@ -11,22 +11,23 @@ public class Main
 {
     public static void main(String args[])
     {
-        uploadPokemon("Pikachu");
         getPokemon();
     }
 
     private static void getPokemon()
     {
-        try()
+        try
         {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/jdbc","root","");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/jdbc","root","");
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from Pokemon");
-            stmt.close();
+            System.out.println(stmt);
+            ResultSet rs = stmt.executeQuery("SELECT * FROM pokemon");
             while(rs.next())
             {
-                System.out.println("ID: " + rs.getInt(2) + " has the name " + rs.getString(1));
+                System.out.println("ID: " + rs.getInt(1) + " has the name " + rs.getString(2));
             }
+            rs.close();
+            stmt.close();
             conn.close();
         }
         catch(Exception ex)
