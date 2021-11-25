@@ -1,9 +1,5 @@
 package com.model;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
@@ -12,10 +8,12 @@ public class Pokemon
 {
     @Size(max = 50)
     @NotBlank
+    @NotNull
     private String name;
 
     @ManyToOne
     @JoinColumn(name = "trainerId")
+    @NotNull
     private Trainer trainer;
 
     @Id
