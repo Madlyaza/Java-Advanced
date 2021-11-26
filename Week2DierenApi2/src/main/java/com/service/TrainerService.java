@@ -1,141 +1,128 @@
 package com.service;
 
+import com.exception.DataNotFoundException;
 import com.model.Pokemon;
 import com.model.Trainer;
+import com.repository.PokemonRepository;
+import com.repository.TrainerRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
 public class TrainerService
 {
-    private final ArrayList<Trainer> trainerList;
-    private final PokemonService pokemonService;
+    private final TrainerRepository trainerRepository;
+    private final PokemonRepository pokemonRepository;
 
-    public TrainerService(ArrayList<Trainer> trainerList, PokemonService pokemonService)
+    public TrainerService(TrainerRepository trainerRepository, PokemonRepository pokemonRepository)
     {
-        this.trainerList = trainerList;
-        this.pokemonService = pokemonService;
+        this.trainerRepository = trainerRepository;
+        this.pokemonRepository = pokemonRepository;
     }
 
 
-    public ArrayList<Trainer> getTrainers()
+    public List<Trainer> getTrainers()
     {
-        return trainerList;
+        return trainerRepository.getTrainers();
     }
 
-    public ResponseEntity<ArrayList<Trainer>> getTrainerByName(String name)
+    public List<Trainer> getTrainerByName(String name)
     {
-        name = name.toLowerCase();
         if(name.equals(""))
         {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            throw new DataNotFoundException("Name cannot be empty");
         }
 
-        ArrayList<Trainer> matchedTrainerList = new ArrayList<>();
+        List<Trainer> matchedTrainerList = new ArrayList<>(trainerRepository.getTrainersByName(name));
 
-        for(Trainer trainer : trainerList)
-        {
-            if (trainer.getName().contains(name))
-            {
-                matchedTrainerList.add(trainer);
-            }
-        }
         if(matchedTrainerList.size() != 0)
         {
-            return new ResponseEntity<>(matchedTrainerList, HttpStatus.OK);
+            throw new DataNotFoundException("No trainers by that name");
         }
-        else
-        {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return matchedTrainerList;
+
     }
 
-    public ResponseEntity<Trainer> getTrainerById(int id)
+    public Trainer getTrainerById(Integer id)
     {
         if(id == 0)
         {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            throw new DataNotFoundException("id cannot be 0");
         }
 
-        for(Trainer trainer : trainerList)
-        {
-            if (trainer.getId() == id)
-            {
-                return new ResponseEntity<>(trainer, HttpStatus.OK);
-            }
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return trainerRepository.getTrainerById(id);
     }
-
-    public ResponseEntity<Trainer> create(Trainer trainer)
-    {
-        Trainer newTrainer = new Trainer();
-        newTrainer.setName(trainer.getName().toLowerCase());
-        newTrainer.setId(trainerList.get(trainerList.size()-1).getId()+1);
-
-        if (trainerList.add(newTrainer))
-        {
-            return new ResponseEntity<>(newTrainer, HttpStatus.CREATED);
-        }
-        else
-        {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-    }
-
-    public ResponseEntity<Trainer> delete(int id)
-    {
-        for(int i = 0; i < trainerList.size(); i++)
-        {
-            if(trainerList.get(i).getId() == id)
-            {
-                return new ResponseEntity<>(trainerList.remove(i), HttpStatus.OK);
-            }
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-    public ResponseEntity<Trainer> update(int id, Trainer trainerToUpdate)
-    {
-        for (Trainer trainer : trainerList)
-        {
-            if (trainer.getId() == id)
-            {
-                trainer.setName(trainerToUpdate.getName().toLowerCase());
-                return new ResponseEntity<>(trainer, HttpStatus.OK);
-            }
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-    public ResponseEntity<ArrayList<Pokemon>> getTrainersPokemon(int id)
-    {
-        ArrayList<Pokemon> trainersPokemonList = new ArrayList<>();
-//        for(Trainer trainer : trainerList)
+//
+//    public ResponseEntity<Trainer> create(Trainer trainer)
+//    {
+//        Trainer newTrainer = new Trainer();
+//        newTrainer.setName(trainer.getName().toLowerCase());
+//        newTrainer.setId(trainerList.get(trainerList.size()-1).getId()+1);
+//
+//        if (trainerList.add(newTrainer))
 //        {
-//            if(trainer.getId() == id)
+//            return new ResponseEntity<>(newTrainer, HttpStatus.CREATED);
+//        }
+//        else
+//        {
+//            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+//        }
+//    }
+//
+//    public ResponseEntity<Trainer> delete(int id)
+//    {
+//        for(int i = 0; i < trainerList.size(); i++)
+//        {
+//            if(trainerList.get(i).getId() == id)
 //            {
-//                ArrayList<Pokemon> pokemonList = pokemonService.getPokemon();
-//                for (Pokemon pokemon : pokemonList)
-//                {
-//                    if(pokemon.getTrainerId() == trainer.getId())
-//                    {
-//                        trainersPokemonList.add(pokemon);
-//                    }
-//                }
+//                return new ResponseEntity<>(trainerList.remove(i), HttpStatus.OK);
 //            }
 //        }
-        if(trainersPokemonList.size() != 0)
-        {
-            return new ResponseEntity<>(trainersPokemonList, HttpStatus.OK);
-        }
-        else
-        {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//    }
+//
+//    public ResponseEntity<Trainer> update(int id, Trainer trainerToUpdate)
+//    {
+//        for (Trainer trainer : trainerList)
+//        {
+//            if (trainer.getId() == id)
+//            {
+//                trainer.setName(trainerToUpdate.getName().toLowerCase());
+//                return new ResponseEntity<>(trainer, HttpStatus.OK);
+//            }
+//        }
+//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//    }
+//
+//    public ResponseEntity<ArrayList<Pokemon>> getTrainersPokemon(int id)
+//    {
+//        ArrayList<Pokemon> trainersPokemonList = new ArrayList<>();
+////        for(Trainer trainer : trainerList)
+////        {
+////            if(trainer.getId() == id)
+////            {
+////                ArrayList<Pokemon> pokemonList = pokemonService.getPokemon();
+////                for (Pokemon pokemon : pokemonList)
+////                {
+////                    if(pokemon.getTrainerId() == trainer.getId())
+////                    {
+////                        trainersPokemonList.add(pokemon);
+////                    }
+////                }
+////            }
+////        }
+//        if(trainersPokemonList.size() != 0)
+//        {
+//            return new ResponseEntity<>(trainersPokemonList, HttpStatus.OK);
+//        }
+//        else
+//        {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
 }

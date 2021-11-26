@@ -1,6 +1,7 @@
 package com.service;
 
 import com.exception.DataNotFoundException;
+import com.exception.MalformedInformationException;
 import com.model.Pokemon;
 import com.repository.PokemonRepository;
 import org.springframework.http.HttpStatus;
@@ -58,7 +59,6 @@ public class PokemonService
 //    {
 //        Pokemon newPokemon = new Pokemon();
 //        newPokemon.setName(pokemon.getName());
-//        newPokemon.setId(pokemonList.get(pokemonList.size()-1).getId()+1);
 //
 //        if(pokemonList.add(newPokemon))
 //        {
@@ -70,17 +70,14 @@ public class PokemonService
 //        }
 //    }
 //
-//    public ResponseEntity<Pokemon> delete(int id)
-//    {
-//        for (int i = 0; i < pokemonList.size(); i++)
-//        {
-//            if (pokemonList.get(i).getId() == id)
-//            {
-//                return new ResponseEntity<>(pokemonList.remove(i), HttpStatus.OK);
-//            }
-//        }
-//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//    }
+    public Pokemon delete(int id)
+    {
+        if(id == 0)
+        {
+            throw new MalformedInformationException("Id cannot be 0");
+        }
+        return pokemonRepository.deletePokemon(id);
+    }
 //
 //    public ResponseEntity<Pokemon> update(int id, Pokemon pokemonToUpdate)
 //    {

@@ -29,7 +29,7 @@ public class ExceptionHandlerController
     }
 
     @ExceptionHandler(Exception.class)
-    public ModelAndView handleError(HttpServletRequest req, Exception ex) {
+    public ModelAndView handleError(HttpServletRequest req, RuntimeException ex) {
         ModelAndView mav = new ModelAndView();
         mav.addObject("exception", ex);
         mav.addObject("url", req.getRequestURL());

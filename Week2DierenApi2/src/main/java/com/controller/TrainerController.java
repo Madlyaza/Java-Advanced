@@ -27,11 +27,11 @@ public class TrainerController
     }
 
     @GetMapping
-    public ResponseEntity<ArrayList<Trainer>> getAll(@RequestParam(required = false) String name)
+    public ResponseEntity<List<Trainer>> getAll(@RequestParam(required = false) String name)
     {
         if(name != null)
         {
-            return trainerService.getTrainerByName(name);
+            return new ResponseEntity<>(trainerService.getTrainerByName(name), HttpStatus.OK);
         }
         else
         {
@@ -42,32 +42,33 @@ public class TrainerController
     @GetMapping("/{id}")
     public ResponseEntity<Trainer> getTrainerById(@PathVariable int id)
     {
-        return trainerService.getTrainerById(id);
+        return new ResponseEntity<>(trainerService.getTrainerById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}/pokemon")
-    public ResponseEntity<ArrayList<Pokemon>> getTrainersPokemon(@PathVariable int id)
-    {
-        return trainerService.getTrainersPokemon(id);
-    }
-
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Trainer> create(@RequestBody Trainer newTrainer)
-    {
-        return trainerService.create(newTrainer);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Trainer> delete(@PathVariable int id)
-    {
-        return trainerService.delete(id);
-    }
-
-    @PutMapping(value = "",
-    consumes = MediaType.APPLICATION_JSON_VALUE,
-    produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Trainer> update(@RequestParam int id, @RequestBody Trainer trainer)
-    {
-        return trainerService.update(id, trainer);
-    }
+    // TODO: Fix this method
+//    @GetMapping("/{id}/pokemon")
+//    public ResponseEntity<ArrayList<Pokemon>> getTrainersPokemon(@PathVariable int id)
+//    {
+//        return trainerService.getTrainersPokemon(id);
+//    }
+//
+//    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<Trainer> create(@RequestBody Trainer newTrainer)
+//    {
+//        return trainerService.create(newTrainer);
+//    }
+//
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<Trainer> delete(@PathVariable int id)
+//    {
+//        return trainerService.delete(id);
+//    }
+//
+//    @PutMapping(value = "",
+//    consumes = MediaType.APPLICATION_JSON_VALUE,
+//    produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<Trainer> update(@RequestParam int id, @RequestBody Trainer trainer)
+//    {
+//        return trainerService.update(id, trainer);
+//    }
 }

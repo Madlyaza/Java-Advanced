@@ -47,11 +47,11 @@ public class PokemonController
 //        return pokemonService.create(newPokemon);
 //    }
 //
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Pokemon> delete(@PathVariable int id)
-//    {
-//        return pokemonService.delete(id);
-//    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Pokemon> delete(@PathVariable int id)
+    {
+        return new ResponseEntity<>(pokemonService.delete(id), HttpStatus.OK);
+    }
 //
 //    @PutMapping(value = "/{id}",
 //    consumes = MediaType.APPLICATION_JSON_VALUE,
