@@ -48,13 +48,9 @@ public class PokemonService
             throw new DataNotFoundException("Name search cannot be empty");
         }
 
-        Pokemon matchedPokemon = pokemonRepository.getPokemonById(id);
-        System.out.println("----------------------------------" + matchedPokemon.getName() + " " + matchedPokemon.getId());
-        // TODO FIX THIS SOMETHING IS BROKEN DUNNO DOES SOME INFINITE LOOP SHIT
-        return matchedPokemon;
+        return pokemonRepository.getPokemonById(id);
     }
 
-    // TODO: unload this, fix it etc
     public Pokemon create(Pokemon pokemon)
     {
         return pokemonRepository.uploadPokemon(pokemon);
@@ -71,6 +67,10 @@ public class PokemonService
 
     public Pokemon update(Integer id, Pokemon pokemonToUpdate)
     {
+        if(id == 0)
+        {
+            throw new MalformedInformationException("Id cannot be 0");
+        }
         return pokemonRepository.updatePokemon(pokemonToUpdate, id);
     }
 }

@@ -45,30 +45,30 @@ public class TrainerController
         return new ResponseEntity<>(trainerService.getTrainerById(id), HttpStatus.OK);
     }
 
-    // TODO: Fix this method
+//    TODO: Fix this method
 //    @GetMapping("/{id}/pokemon")
 //    public ResponseEntity<ArrayList<Pokemon>> getTrainersPokemon(@PathVariable int id)
 //    {
 //        return trainerService.getTrainersPokemon(id);
 //    }
-//
-//    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<Trainer> create(@RequestBody Trainer newTrainer)
-//    {
-//        return trainerService.create(newTrainer);
-//    }
-//
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Trainer> delete(@PathVariable int id)
-//    {
-//        return trainerService.delete(id);
-//    }
-//
-//    @PutMapping(value = "",
-//    consumes = MediaType.APPLICATION_JSON_VALUE,
-//    produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<Trainer> update(@RequestParam int id, @RequestBody Trainer trainer)
-//    {
-//        return trainerService.update(id, trainer);
-//    }
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Trainer> create(@RequestBody Trainer newTrainer)
+    {
+        return new ResponseEntity<>(trainerService.create(newTrainer), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Trainer> delete(@PathVariable Integer id)
+    {
+        return new ResponseEntity<>(trainerService.delete(id), HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/{id}",
+    consumes = MediaType.APPLICATION_JSON_VALUE,
+    produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Trainer> update(@PathVariable Integer id, @RequestBody Trainer trainer)
+    {
+        return new ResponseEntity<>(trainerService.update(id, trainer), HttpStatus.OK);
+    }
 }

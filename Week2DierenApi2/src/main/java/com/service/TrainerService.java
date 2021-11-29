@@ -1,6 +1,7 @@
 package com.service;
 
 import com.exception.DataNotFoundException;
+import com.exception.MalformedInformationException;
 import com.model.Pokemon;
 import com.model.Trainer;
 import com.repository.PokemonRepository;
@@ -45,7 +46,6 @@ public class TrainerService
             throw new DataNotFoundException("No trainers by that name");
         }
         return matchedTrainerList;
-
     }
 
     public Trainer getTrainerById(Integer id)
@@ -57,48 +57,30 @@ public class TrainerService
 
         return trainerRepository.getTrainerById(id);
     }
-//
-//    public ResponseEntity<Trainer> create(Trainer trainer)
-//    {
-//        Trainer newTrainer = new Trainer();
-//        newTrainer.setName(trainer.getName().toLowerCase());
-//        newTrainer.setId(trainerList.get(trainerList.size()-1).getId()+1);
-//
-//        if (trainerList.add(newTrainer))
-//        {
-//            return new ResponseEntity<>(newTrainer, HttpStatus.CREATED);
-//        }
-//        else
-//        {
-//            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-//        }
-//    }
-//
-//    public ResponseEntity<Trainer> delete(int id)
-//    {
-//        for(int i = 0; i < trainerList.size(); i++)
-//        {
-//            if(trainerList.get(i).getId() == id)
-//            {
-//                return new ResponseEntity<>(trainerList.remove(i), HttpStatus.OK);
-//            }
-//        }
-//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//    }
-//
-//    public ResponseEntity<Trainer> update(int id, Trainer trainerToUpdate)
-//    {
-//        for (Trainer trainer : trainerList)
-//        {
-//            if (trainer.getId() == id)
-//            {
-//                trainer.setName(trainerToUpdate.getName().toLowerCase());
-//                return new ResponseEntity<>(trainer, HttpStatus.OK);
-//            }
-//        }
-//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//    }
-//
+
+    public Trainer create(Trainer trainer)
+    {
+        return trainerRepository.uploadTrainer(trainer);
+    }
+
+    public Trainer delete(Integer id)
+    {
+        if(id == 0)
+        {
+            throw new MalformedInformationException("id cannot be 0");
+        }
+        return trainerRepository.deleteTrainer(id);
+    }
+
+    public Trainer update(Integer id, Trainer trainerToUpdate)
+    {
+        if(id == 0)
+        {
+            throw new MalformedInformationException("Id cannot be 0");
+        }
+        return trainerRepository.updateTrainer(trainerToUpdate, id);
+    }
+
 //    public ResponseEntity<ArrayList<Pokemon>> getTrainersPokemon(int id)
 //    {
 //        ArrayList<Pokemon> trainersPokemonList = new ArrayList<>();

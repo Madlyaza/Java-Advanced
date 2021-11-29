@@ -1,5 +1,6 @@
 package com.repository;
 
+import com.model.Pokemon;
 import com.model.Trainer;
 import org.springframework.stereotype.Repository;
 
@@ -33,5 +34,28 @@ public class TrainerRepository
     {
         TypedQuery<Trainer> query = manager.createQuery("SELECT a FROM Trainer WHERE id = '"+ id + "'", Trainer.class);
         return query.getSingleResult();
+    }
+
+    @Transactional
+    public Trainer uploadTrainer(Trainer trainer)
+    {
+        manager.persist(trainer);
+        return manager.find(Trainer.class, trainer.getId());
+    }
+
+    @Transactional
+    public Trainer deleteTrainer(Integer id)
+    {
+        Trainer trainer = manager.find(Trainer.class, id);
+        manager.remove(trainer);
+        return trainer;
+    }
+
+    @Transactional
+    public Trainer updateTrainer(Trainer trainer, Integer id)
+    {
+        Trainer trainerToUpdate = manager.find(Trainer.class, id);
+        trainerToUpdate.setName(trainer.getName());
+        return trainerToUpdate;
     }
 }
