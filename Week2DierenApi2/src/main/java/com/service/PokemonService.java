@@ -55,21 +55,11 @@ public class PokemonService
     }
 
     // TODO: unload this, fix it etc
-//    public ResponseEntity<Pokemon> create(Pokemon pokemon)
-//    {
-//        Pokemon newPokemon = new Pokemon();
-//        newPokemon.setName(pokemon.getName());
-//
-//        if(pokemonList.add(newPokemon))
-//        {
-//            return new ResponseEntity<>(newPokemon, HttpStatus.CREATED);
-//        }
-//        else
-//        {
-//            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-//        }
-//    }
-//
+    public Pokemon create(Pokemon pokemon)
+    {
+        return pokemonRepository.uploadPokemon(pokemon);
+    }
+
     public Pokemon delete(int id)
     {
         if(id == 0)
@@ -78,17 +68,9 @@ public class PokemonService
         }
         return pokemonRepository.deletePokemon(id);
     }
-//
-//    public ResponseEntity<Pokemon> update(int id, Pokemon pokemonToUpdate)
-//    {
-//        for (Pokemon pokemon : pokemonList)
-//        {
-//            if (pokemon.getId() == id)
-//            {
-//                pokemon.setName(pokemonToUpdate.getName());
-//                return new ResponseEntity<>(pokemon, HttpStatus.OK);
-//            }
-//        }
-//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//    }
+
+    public Pokemon update(Integer id, Pokemon pokemonToUpdate)
+    {
+        return pokemonRepository.updatePokemon(pokemonToUpdate, id);
+    }
 }

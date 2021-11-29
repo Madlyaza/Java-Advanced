@@ -18,7 +18,6 @@ public class Trainer
     @NotBlank
     private String name;
 
-    @Positive
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Integer id;

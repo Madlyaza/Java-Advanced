@@ -1,6 +1,7 @@
 package com.repository;
 
 import com.model.Pokemon;
+import com.model.Trainer;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -36,17 +37,26 @@ public class PokemonRepository
         return query.getSingleResult();
     }
 
-//    public Pokemon uploadPokemon(Pokemon pokemon)
-//    {
-//        Query query = manager.createQuery("INSERT INTO Pokemon ('name', 'trainerId') VALUES (?, ?)");
-//        query.setParameter(1, pokemon.getName());
-//
-//    }
+    @Transactional
+    public Pokemon uploadPokemon(Pokemon pokemon)
+    {
+        manager.persist(pokemon);
+        return manager.find(Pokemon.class, pokemon.getId());
+    }
 
+    @Transactional
     public Pokemon deletePokemon(Integer id)
     {
-        TypedQuery<Pokemon> query = manager.createQuery("DELETE FROM Pokemon WHERE id = (?)", Pokemon.class);
-        query.setParameter(1, id);
-        return query.getSingleResult();
+        Pokemon pokemon = manager.find(Pokemon.class, id);
+        manager.remove(pokemon);
+        return pokemon;
+    }
+
+    @Transactional
+    public Pokemon updatePokemon(Pokemon pokemon, Integer id)
+    {
+        Pokemon pokemonToUpdate = manager.find(Pokemon.class, id);
+        pokemonToUpdate.setName(pokemon.getName());
+        return pokemonToUpdate;
     }
 }
