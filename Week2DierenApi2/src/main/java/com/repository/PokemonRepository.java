@@ -25,10 +25,10 @@ public class PokemonRepository
         return query.getResultList();
     }
 
-    public List<Pokemon> getPokemonByName(String name)
+    public List<Pokemon> getPokemonByName(String searchName)
     {
-        TypedQuery<Pokemon> query = manager.createQuery("SELECT a FROM Pokemon a WHERE name LIKE '%:name%'", Pokemon.class);
-        query.setParameter(name, name);
+        TypedQuery<Pokemon> query = manager.createQuery("SELECT a FROM Pokemon a WHERE name LIKE :name", Pokemon.class);
+        query.setParameter("name", "%" + searchName + "%");
         return query.getResultList();
     }
 

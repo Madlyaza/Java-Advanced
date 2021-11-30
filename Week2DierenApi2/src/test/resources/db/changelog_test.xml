@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <include file="db/changelog_master.xml"/>
+    <changeSet id="3" author="Madlyaza">
+        <preConditions>
+            <tableExists tableName="trainer"/>
+            <tableExists tableName="pokemon"/>
+        </preConditions>
+        <loadData tableName="trainer" file="db/trainer.csv">
+            <column header="name" name="name" type="STRING"/>
+        </loadData>
+        <loadData tableName="pokemon" file="db/pokemon.csv">
+            <column header="name" name="name" type="STRING"/>
+            <column header="trainerId" name="trainerId" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+</databaseChangeLog>

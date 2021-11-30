@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="1" author="Madlyaza">
+        <preConditions>
+            <not>
+                <tableExists tableName="trainer"/>
+            </not>
+        </preConditions>
+        <createTable tableName="trainer">
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="2" author="Madlyaza">
+        <preConditions>
+            <not>
+                <tableExists tableName="Pokemon"/>
+            </not>
+        </preConditions>
+        <createTable tableName="pokemon">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="trainerId" type="int">
+                <constraints foreignKeyName="id" nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="pokemon" baseColumnNames="trainerId" constraintName="fk_trainer_pokemon"
+                                 referencedTableName="trainer"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>
