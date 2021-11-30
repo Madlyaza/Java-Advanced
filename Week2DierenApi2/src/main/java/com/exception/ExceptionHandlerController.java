@@ -6,34 +6,50 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
 
 
-@ControllerAdvice
+@RestControllerAdvice
 public class ExceptionHandlerController
 {
-    @ResponseStatus(value = HttpStatus.CONFLICT,
-            reason = "Data integrity violation")
-    @ExceptionHandler({DataIntegrityViolationException.class, DataNotFoundException.class})
-    public void conflict()
+//    @ResponseStatus(value = HttpStatus.CONFLICT,
+//            reason = "Data integrity violation")
+//    @ExceptionHandler({DataIntegrityViolationException.class, DataNotFoundException.class})
+//    public void conflict()
+//    {
+//
+//    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(RuntimeException.class)
+    public String runtimeHandler(RuntimeException ex)
     {
-
+        return ex.getMessage();
     }
 
-    @ExceptionHandler({SQLException.class, DataAccessException.class})
-    public String databaseError() {
-        return "databaseError";
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(DataNotFoundException.class)
+    public String dataNotFoundHandler(DataNotFoundException ex)
+    {
+        return ex.getMessage();
     }
 
-    @ExceptionHandler(Exception.class)
-    public ModelAndView handleError(HttpServletRequest req, RuntimeException ex) {
-        ModelAndView mav = new ModelAndView();
-        mav.addObject("exception", ex);
-        mav.addObject("url", req.getRequestURL());
-        mav.setViewName("error");
-        return mav;
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(MalformedInformationException.class)
+    public String malformedInformationException(MalformedInformationException ex)
+    {
+        return ex.getMessage();
     }
+
+
+//
+//    @ExceptionHandler(Exception.class)
+//    public String handleError(HttpServletRequest req, RuntimeException ex) {
+//
+//        return "Error";
+//    }
 }

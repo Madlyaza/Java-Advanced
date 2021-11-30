@@ -37,14 +37,12 @@ public class PokemonRepository
         return manager.find(Pokemon.class, id);
     }
 
-    @Transactional
     public Pokemon uploadPokemon(Pokemon pokemon)
     {
         manager.persist(pokemon);
         return manager.find(Pokemon.class, pokemon.getId());
     }
 
-    @Transactional
     public Pokemon deletePokemon(Integer id)
     {
         Pokemon pokemon = manager.find(Pokemon.class, id);
@@ -52,7 +50,6 @@ public class PokemonRepository
         return pokemon;
     }
 
-    @Transactional
     public Pokemon updatePokemon(Pokemon pokemon, Integer id)
     {
         Pokemon pokemonToUpdate = manager.find(Pokemon.class, id);

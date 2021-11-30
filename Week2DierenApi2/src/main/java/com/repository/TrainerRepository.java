@@ -1,6 +1,5 @@
 package com.repository;
 
-import com.model.Pokemon;
 import com.model.Trainer;
 import org.springframework.stereotype.Repository;
 
@@ -26,24 +25,21 @@ public class TrainerRepository
 
     public List<Trainer> getTrainersByName(String name)
     {
-        TypedQuery<Trainer> query = manager.createQuery("SELECT a FROM Trainer a WHERE name LIKE '%" + name + "%'", Trainer.class);
-        return query.getResultList();
+        TypedQuery<Trainer> query = manager.createQuery("SELECT a FROM Trainer a WHERE name LIKE '%:name%'", Trainer.class);
+        return query.setParameter(name, name).getResultList();
     }
 
     public Trainer getTrainerById(Integer id)
     {
-        TypedQuery<Trainer> query = manager.createQuery("SELECT a FROM Trainer WHERE id = '"+ id + "'", Trainer.class);
-        return query.getSingleResult();
+        return manager.find(Trainer.class, id);
     }
 
-    @Transactional
     public Trainer uploadTrainer(Trainer trainer)
     {
         manager.persist(trainer);
         return manager.find(Trainer.class, trainer.getId());
     }
 
-    @Transactional
     public Trainer deleteTrainer(Integer id)
     {
         Trainer trainer = manager.find(Trainer.class, id);
@@ -51,7 +47,6 @@ public class TrainerRepository
         return trainer;
     }
 
-    @Transactional
     public Trainer updateTrainer(Trainer trainer, Integer id)
     {
         Trainer trainerToUpdate = manager.find(Trainer.class, id);

@@ -29,7 +29,7 @@ public class PokemonService
     {
         if(name.equals(""))
         {
-            throw new DataNotFoundException("Name search cannot be empty.");
+            throw new MalformedInformationException("Name search cannot be empty.");
         }
 
         List<Pokemon> matchedPokemonList = new ArrayList<>(pokemonRepository.getPokemonByName(name));
@@ -45,7 +45,7 @@ public class PokemonService
     {
         if(id == 0)
         {
-            throw new DataNotFoundException("Name search cannot be empty");
+            throw new MalformedInformationException("Id cannot be 0");
         }
 
         return pokemonRepository.getPokemonById(id);
