@@ -27,14 +27,14 @@ public class PokemonRepository
 
     public List<Pokemon> getPokemonByName(String name)
     {
-        TypedQuery<Pokemon> query = manager.createQuery("SELECT a FROM Pokemon a WHERE name LIKE '%" + name + "%'", Pokemon.class);
+        TypedQuery<Pokemon> query = manager.createQuery("SELECT a FROM Pokemon a WHERE name LIKE '%:name%'", Pokemon.class);
+        query.setParameter(name, name);
         return query.getResultList();
     }
 
     public Pokemon getPokemonById(Integer id)
     {
-        TypedQuery<Pokemon> query = manager.createQuery("SELECT a FROM Pokemon a WHERE id = '"+id+"'", Pokemon.class);
-        return query.getSingleResult();
+        return manager.find(Pokemon.class, id);
     }
 
     @Transactional
