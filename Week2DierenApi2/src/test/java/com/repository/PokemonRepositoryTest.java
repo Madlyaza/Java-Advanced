@@ -61,22 +61,28 @@ class PokemonRepositoryTest
         Pokemon pokemon = new Pokemon();
         pokemon.setName("Bulbasaur");
         pokemon.setTrainer(manager.find(Trainer.class, 1));
-        System.out.println("------------------------------------------------------------------");
-        System.out.println(pokemon.getId());
-        System.out.println(pokemon.getTrainer().getName());
         Pokemon uploadedPokemon = pokemonRepository.uploadPokemon(pokemon);
 
         assertEquals("Bulbasaur", uploadedPokemon.getName());
         assertEquals("Chelsea", uploadedPokemon.getTrainer().getName());
     }
 
-//    @Test
-//    void deletePokemon()
-//    {
-//    }
-//
-//    @Test
-//    void updatePokemon()
-//    {
-//    }
+    @Test
+    void deletePokemon()
+    {
+        Pokemon deletedPokemon = pokemonRepository.deletePokemon(1);
+        assertEquals("Charmander", deletedPokemon.getName());
+    }
+
+    @Test
+    void updatePokemon()
+    {
+        Pokemon pokemon = new Pokemon();
+        pokemon.setName("Bulbasaur");
+        pokemon.setTrainer(manager.find(Trainer.class, 1));
+        Pokemon uploadedPokemon = pokemonRepository.updatePokemon(pokemon, 1);
+
+        assertEquals("Bulbasaur", manager.find(Pokemon.class, 1).getName());
+        assertEquals("Chelsea", manager.find(Pokemon.class, 1).getTrainer().getName());
+    }
 }

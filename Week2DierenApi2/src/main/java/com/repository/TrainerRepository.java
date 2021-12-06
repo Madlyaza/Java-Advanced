@@ -25,8 +25,9 @@ public class TrainerRepository
 
     public List<Trainer> getTrainersByName(String name)
     {
-        TypedQuery<Trainer> query = manager.createQuery("SELECT a FROM Trainer a WHERE name LIKE '%:name%'", Trainer.class);
-        return query.setParameter(name, name).getResultList();
+        TypedQuery<Trainer> query = manager.createQuery("SELECT a FROM Trainer a WHERE name LIKE :name", Trainer.class);
+        query.setParameter("name", "%" + name + "%");
+        return query.getResultList();
     }
 
     public Trainer getTrainerById(Integer id)

@@ -15,15 +15,18 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
 
+@EnableWebMvc
 @EnableTransactionManagement
 @Configuration
-@ComponentScan(basePackages = "com.repository")
-public class DatabaseConfigTest
+@ComponentScan(basePackages = "com")
+public class DatabaseConfigTest implements WebMvcConfigurer
 {
     @Bean(name = "dataSourceTest")
     public DataSource dataSource()
