@@ -1,6 +1,5 @@
 package com.controller;
 
-
 import com.configuration.DatabaseConfigTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,13 +10,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import javax.print.attribute.standard.Media;
-
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringJUnitWebConfig(classes = DatabaseConfigTest.class)
-public class PokemonControllerTest
+class TrainerControllerTest
 {
     @Autowired
     private WebApplicationContext webContext;
@@ -31,56 +30,55 @@ public class PokemonControllerTest
     }
 
     @Test
-    public void testGetPokemon() throws Exception
+    void getAllTrainers() throws Exception
     {
-        this.mockMvc.perform(get("/pokemon"))
-                .andExpect(status().isOk())
-                .andExpect(header().string("Content-Type", MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(jsonPath("$.id").value());
-    }
-
-    @Test
-    public void testGetPokemonByName() throws Exception
-    {
-        this.mockMvc.perform(get("/pokemon")
-                        .param("name","Char"))
+        this.mockMvc.perform(get("/trainer"))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Type", "application/json"));
     }
 
     @Test
-    public void testGetPokemonById() throws Exception
+    void getTrainerByName() throws Exception
     {
-        this.mockMvc.perform(get("/pokemon/1"))
+        this.mockMvc.perform(get("/trainer")
+                    .param("name", "chelsea"))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Type", "application/json"));
     }
 
     @Test
-    public void testPostPokemon() throws Exception
+    void getTrainerById() throws Exception
     {
-        this.mockMvc.perform(post("/pokemon")
+        this.mockMvc.perform(get("/trainer/1"))
+                .andExpect(status().isOk())
+                .andExpect(header().string("Content-Type", "application/json"));
+    }
+
+    @Test
+    void createTrainer() throws Exception
+    {
+        this.mockMvc.perform(post("/trainer")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"name\":\"Charmander\",\"trainer\":{\"id\":1,\"name\":\"Chelsea\"}}"))
+                        .content("{\"name\":\"Chelsea\"}"))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Type", "application/json"));
     }
 
     @Test
-    public void testPutPokemon() throws Exception
+    void updateTrainer() throws Exception
     {
-        this.mockMvc.perform(put("/pokemon/2")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"Cyndaquil\",\"trainer\":{\"id\":1,\"name\":\"Chelsea\"}}"))
+        this.mockMvc.perform(put("/trainer/2")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"name\":\"Kelly\"}"))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Type", "application/json"));
     }
 
     @Test
-    public void testDeletePokemon() throws Exception
+    void deleteTrainer() throws Exception
     {
-        this.mockMvc.perform(delete("/pokemon/10"))
-                .andExpect(status().isOk())
+        this.mockMvc.perform(delete("/trainer/3"))
+                .andExpect(status().is4xxClientError())
                 .andExpect(header().string("Content-Type", "application/json"));
     }
 }

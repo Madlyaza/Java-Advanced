@@ -33,7 +33,7 @@ class TrainerRepositoryTest
     void getTrainers()
     {
         List<Trainer> trainerList = trainerRepository.getTrainers();
-        assertEquals(4, trainerList.size());
+        assertEquals(5, trainerList.size());
         assertEquals("Chelsea", trainerList.get(0).getName());
         assertEquals("Jane", trainerList.get(3).getName());
     }
@@ -42,10 +42,9 @@ class TrainerRepositoryTest
     void getTrainersByName()
     {
         List<Trainer> trainerList = trainerRepository.getTrainersByName("Chel");
-        assertEquals(1, trainerList.size());
+        assertEquals(2, trainerList.size());
         trainerList = trainerRepository.getTrainersByName("e");
-        assertEquals(4, trainerList.size());
-        assertEquals("Chelsea", trainerList.get(0).getName());
+        assertEquals(5, trainerList.size());
     }
 
     @Test
@@ -63,7 +62,7 @@ class TrainerRepositoryTest
         Trainer uploadedTrainer = trainerRepository.uploadTrainer(trainer);
 
         assertEquals("Sophie", uploadedTrainer.getName());
-        assertEquals(5, uploadedTrainer.getId());
+        assertEquals(6, uploadedTrainer.getId());
     }
 
     @Test

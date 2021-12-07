@@ -39,6 +39,6 @@
         </createTable>
         <addForeignKeyConstraint baseTableName="pokemon" baseColumnNames="trainerId" constraintName="fk_trainer_pokemon"
                                  referencedTableName="trainer"
-                                 referencedColumnNames="id"/>
+                                 referencedColumnNames="id" onDelete="NO ACTION" onUpdate="NO ACTION"/>
     </changeSet>
 </databaseChangeLog>

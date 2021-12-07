@@ -38,16 +38,15 @@ class PokemonRepositoryTest
         List<Pokemon> pokemonList = pokemonRepository.getPokemon();
         assertEquals(10, pokemonList.size());
         assertEquals("Charmander", pokemonList.get(0).getName());
-        assertEquals("Zapdos", pokemonList.get(9).getName());
+        assertEquals("Charizard", pokemonList.get(3).getName());
     }
 
     @Test
     void getPokemonByName()
     {
-        List<Pokemon> pokemonList = pokemonRepository.getPokemonByName("Char");
-        assertEquals(2, pokemonList.size());
-        assertEquals("Charmander", pokemonList.get(0).getName());
-        assertEquals("Charizard", pokemonList.get(1).getName());
+        List<Pokemon> pokemonList = pokemonRepository.getPokemonByName("Artic");
+        assertEquals(1, pokemonList.size());
+        assertEquals("Articuno", pokemonList.get(0).getName());
     }
 
     @Test
